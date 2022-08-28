@@ -1,0 +1,31 @@
+version: "3.6"
+
+services:
+  api:
+    container_name: nowme-API
+    restart: always
+    build: .
+    ports:
+      - "${PORT}:${PORT}"
+      - "9229:9229"
+    volumes:
+      - ./src/:/code/
+    environment:
+      BACKEND_HOST: ${BACKEND_HOST}
+      PORT: ${PORT}
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_SSL: ${DATABASE_SSL}
+      
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GOOGLE_REDIRECT_URI: ${GOOGLE_REDIRECT_URI}
+      GOOGLE_AUTH_URL: ${GOOGLE_AUTH_URL}
+      GOOGLE_TOKEN_URL: ${GOOGLE_TOKEN_URL}
+      GOOGLE_USER_INFO_URL: ${GOOGLE_USER_INFO_URL}
+
+      JWT_SECRET: ${JWT_SECRET}
+      SENTRY_DSN: ${SENTRY_DSN}
