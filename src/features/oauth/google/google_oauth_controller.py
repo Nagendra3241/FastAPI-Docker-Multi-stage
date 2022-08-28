@@ -4,30 +4,15 @@ from typing import Any, NamedTuple
 
 from pydantic import BaseModel
 from config.logger import logger
-from fastapi import Request
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import HTTPException
-import requests
-from features.users import users_controller, users_service
+
+from features.users import users_controller
+from features.oauth.google.google_oauth_types import GoogleOauthCode
 from features.users.users_service import UserInDB
 from features.oauth.google import google_oauth_service
 from jose import JWTError, jwt
-
-class GoogleClientParams(NamedTuple):
-    code: str
-    client_id       : str | None = os.getenv("GOOGLE_CLIENT_ID")
-    client_secret   : str | None = os.getenv("GOOGLE_CLIENT_SECRET")
-    redirect_uri    : str | None = os.getenv("GOOGLE_REDIRECT_URI")
-    grant_type      : str        = "authorization_code"
-    
-class GoogleUserInfoResponse(NamedTuple):
-    email: str
-    name: str
-    picture: str
-    locale: str
-
-class GoogleOauthCode(BaseModel):
-    code: str    
+ 
 
 
 async def get_google_oauth_url():
@@ -81,7 +66,7 @@ async def get_google_session(body: GoogleOauthCode):
                 httponly=True,
                 secure=True,
                 samesite="none",
-                domain="https://now-me.herokuapp.com/",
+                domain="/",
                 # max_age=user_tokens.get("expires_in"),
                 # expires=user_tokens.get("expires_in"),
             ) """

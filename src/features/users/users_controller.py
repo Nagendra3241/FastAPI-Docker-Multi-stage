@@ -2,6 +2,7 @@ import os
 from fastapi import Request, HTTPException, status
 from features.users.users_schema import User
 from features.users import users_service
+from features.users.users_types import UserInDB
 from config.logger import logger
 from database.config import TORTOISE_ORM
 from jose import JWTError, jwt
@@ -29,7 +30,7 @@ async def get_current_user(req: Request):
         )
 
 
-async def update_or_create_user(user: users_service.UserInDB) -> User:
+async def update_or_create_user(user: UserInDB) -> User:
 
     user_in_db = await User.filter(email=user.email).first()
     if not user_in_db:

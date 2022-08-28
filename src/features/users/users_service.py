@@ -1,31 +1,15 @@
 from typing import Any
-from pydantic import BaseModel
+from .users_types import UserInDB, UserOutDB
 from features.users.users_schema import User
 from config.logger import logger
-
-
-class UserInDB(BaseModel):
-    email: str
-    name: str
-    id_token: str
-    access_token: str
-    refresh_token: str
-    picture: str
-    locale: str
-
-
-class UserOutDB(BaseModel):
-    email: str
-    name: str
-    picture: str
-    locale: str
 
 
 async def create_user(user: UserInDB) -> User:
     return await User.create(**user.dict())
 
+
 async def update_user(user: UserInDB, user_in_db: User) -> User:
-    await user_in_db.save() # Triggers update_at TS field when on auto_now=True
+    await user_in_db.save()  # Triggers update_at TS field when on auto_now=True
     return user_in_db.update_from_dict({**user.dict()})
 
 

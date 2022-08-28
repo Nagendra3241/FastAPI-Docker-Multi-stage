@@ -4,22 +4,8 @@ from typing import Any
 from pydantic import BaseModel
 from config.logger import logger
 from fastapi.exceptions import HTTPException
+from features.oauth.google.google_oauth_types import GoogleClientParams, GoogleUserInfoResponse
 import requests
-
-
-class GoogleClientParams(BaseModel):
-    code: str
-    client_id: str | None = os.getenv("GOOGLE_CLIENT_ID")
-    client_secret: str | None = os.getenv("GOOGLE_CLIENT_SECRET")
-    redirect_uri: str | None = os.getenv("GOOGLE_REDIRECT_URI")
-    grant_type: str = "authorization_code"
-
-
-class GoogleUserInfoResponse(BaseModel):
-    email: str
-    name: str
-    picture: str
-    locale: str
 
 
 def get_google_tokens(access_code: str):
