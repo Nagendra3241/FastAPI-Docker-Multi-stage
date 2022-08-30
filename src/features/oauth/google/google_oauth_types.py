@@ -9,10 +9,10 @@ class GoogleClientParams(BaseModel):
     grant_type      : str        = "authorization_code"
     
 class GoogleUserInfoResponse(BaseModel):
-    email: str
-    name: str
-    picture: str
-    locale: str
+    email   : str
+    name    : str
+    picture : str
+    locale  : str
 
 class GoogleOauthCode(BaseModel):
     code: str   

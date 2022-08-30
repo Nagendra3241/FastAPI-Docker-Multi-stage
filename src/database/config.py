@@ -4,7 +4,7 @@ from config.logger import logger
 
 
 # https://github.com/tortoise/aerich
-# aerich init -t src.database.postgres.TORTOISE_ORM --location "src/database/migrations/"
+# aerich init -t src.database.config.TORTOISE_ORM --location "src/database/migrations/"
 # aerich init-db
 # aerich migrate --name "migration_name"
 # aerich upgrade
