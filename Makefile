@@ -24,9 +24,6 @@ deploy:
 	git add .
 	git commit --allow-empty -m "Deploy"
 	git push
-	railway link 852964f6-add8-4a82-91a0-05727bc22314
-	railway up
-	railway logs
 
 tidy:
 	clear
