@@ -2,7 +2,7 @@ version: "3.6"
 
 services:
   api:
-    container_name: nowme-API
+    container_name: DMP-API
     restart: always
     build: .
     ports:
