@@ -3,7 +3,7 @@ from fastapi import Request, HTTPException, status
 from features.users.users_schema import User
 from features.users import users_service
 from features.users.users_types import UserInDB
-from config.logger import logger
+from app_config.logger import logger
 from database.config import TORTOISE_ORM
 from jose import JWTError, jwt
 

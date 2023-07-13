@@ -1,31 +1,33 @@
 import os
+print("hellooo", os.getcwd())
+print(os.listdir())
 from typing import Any
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from config.index_routes import docs
+from app_config.index_routes import docs
 from database.config import Postgres_init, Postgres_shutdown
 from features.oauth.google.google_oauth_routes import GOOGLE_OAUTH_ROUTER
 from features.users.users_routes import USERS_ROUTER
 
 from starlette.middleware.sessions import SessionMiddleware
-from config.logger import logger
+from app_config.logger import logger
 from fastapi.openapi.utils import get_openapi
-from config.app_info import description, tags_metadata
+from app_config.app_info import description, tags_metadata
 
-import sentry_sdk
-from sentry_sdk.integrations.starlette import StarletteIntegration
-from sentry_sdk.integrations.fastapi import FastApiIntegration
+# import sentry_sdk
+# from sentry_sdk.integrations.starlette import StarletteIntegration
+# from sentry_sdk.integrations.fastapi import FastApiIntegration
 
 
-# Sentry
-sentry_sdk.init(
-    dsn=os.getenv("SENTRY_DSN"),
-    integrations=[
-        StarletteIntegration(),
-        FastApiIntegration(),
-    ],
-    traces_sample_rate=1.0,
-)
+# # Sentry
+# sentry_sdk.init(
+#     dsn=os.getenv("SENTRY_DSN"),
+#     integrations=[
+#         StarletteIntegration(),
+#         FastApiIntegration(),
+#     ],
+#     traces_sample_rate=1.0,
+# )
 
 # App
 app = FastAPI()

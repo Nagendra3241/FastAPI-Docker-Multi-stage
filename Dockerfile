@@ -1,15 +1,26 @@
-FROM python:3.10.4-slim-buster as basic
+# temp stage
+FROM python:3.11.4-slim-buster as builder
 
+WORKDIR /app
 
-WORKDIR /code
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-COPY ./src/ .
+RUN apt-get update && apt-get install -y --no-install-recommends gcc
+
 COPY requirements.txt .
-
-RUN  apt-get update\
-    && python -m pip install --upgrade pip
-
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
 
 
-CMD uvicorn app:app --reload --host ${BACKEND_HOST} --port ${PORT}
+# final stage
+FROM python:3.11.4-slim-buster
+
+WORKDIR /app
+COPY ./src/ /app
+
+COPY --from=builder /app/wheels /wheels
+COPY --from=builder /app/requirements.txt .
+
+RUN pip install --no-cache /wheels/*
+
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "80"]

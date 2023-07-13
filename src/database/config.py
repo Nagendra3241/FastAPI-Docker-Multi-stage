@@ -1,6 +1,6 @@
 from tortoise import Tortoise
-from .postgres import POSTGRES_DB_PARAMS
-from config.logger import logger
+from database.postgres import POSTGRES_DB_PARAMS
+from app_config.logger import logger
 
 
 # https://github.com/tortoise/aerich

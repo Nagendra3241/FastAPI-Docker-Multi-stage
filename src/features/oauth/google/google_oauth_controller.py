@@ -3,7 +3,7 @@ import traceback
 from typing import Any, NamedTuple
 
 from pydantic import BaseModel
-from config.logger import logger
+from app_config.logger import logger
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import HTTPException
 
@@ -12,7 +12,7 @@ from features.oauth.google.google_oauth_types import GoogleOauthCode
 from features.users.users_service import UserInDB
 from features.oauth.google import google_oauth_service
 from jose import JWTError, jwt
- 
+
 
 
 async def get_google_oauth_url():
@@ -72,7 +72,7 @@ async def get_google_session(body: GoogleOauthCode):
             ) """
 
         res = JSONResponse(content={"message": "OK"}, status_code=200)
-        res.headers["Authorization"] = f"Bearer {jwt_token}"        
+        res.headers["Authorization"] = f"Bearer {jwt_token}"
         return res
 
 

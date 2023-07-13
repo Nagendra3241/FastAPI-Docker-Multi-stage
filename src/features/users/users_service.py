@@ -1,7 +1,7 @@
 from typing import Any
 from .users_types import UserInDB, UserOutDB
 from features.users.users_schema import User
-from config.logger import logger
+from app_config.logger import logger
 
 
 async def create_user(user: UserInDB) -> User:

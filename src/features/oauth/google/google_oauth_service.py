@@ -2,7 +2,7 @@ import os
 import traceback
 from typing import Any
 from pydantic import BaseModel
-from config.logger import logger
+from app_config.logger import logger
 from fastapi.exceptions import HTTPException
 from features.oauth.google.google_oauth_types import GoogleClientParams, GoogleUserInfoResponse
 import requests
