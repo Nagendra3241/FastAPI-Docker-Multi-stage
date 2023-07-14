@@ -1,15 +1,35 @@
-version: "3.6"
+version: "3.7"
 
 services:
-  api:
-    container_name: DMP-API
+  api-prod:
+    container_name: api-prod
+    build:
+      context: .
+      target: prod
     restart: always
-    build: .
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      PORT: ${PORT}
+      BACKEND_HOST: ${BACKEND_HOST}
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_SSL: ${DATABASE_SSL}
+
+  api-dev:
+    container_name: api-dev
+    build:
+      context: .
+      target: dev
+    restart: always
+    volumes:
+      - ./src/:/app/
     ports:
       - "${PORT}:${PORT}"
       - "9229:9229"
-    volumes:
-      - ./src/:/code/
     environment:
       BACKEND_HOST: ${BACKEND_HOST}
       PORT: ${PORT}
@@ -19,13 +39,4 @@ services:
       DATABASE_USER: ${DATABASE_USER}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       DATABASE_SSL: ${DATABASE_SSL}
-      
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
-      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
-      GOOGLE_REDIRECT_URI: ${GOOGLE_REDIRECT_URI}
-      GOOGLE_AUTH_URL: ${GOOGLE_AUTH_URL}
-      GOOGLE_TOKEN_URL: ${GOOGLE_TOKEN_URL}
-      GOOGLE_USER_INFO_URL: ${GOOGLE_USER_INFO_URL}
 
-      JWT_SECRET: ${JWT_SECRET}
-      SENTRY_DSN: ${SENTRY_DSN}

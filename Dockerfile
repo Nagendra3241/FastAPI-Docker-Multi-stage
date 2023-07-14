@@ -1,5 +1,8 @@
-# temp stage
-FROM python:3.11.4-slim-buster as builder
+ARG PYTHON_VERSION=3.11.4
+ARG SHA256=c46b0ae5728c2247b99903098ade3176a58e274d9c7d2efeaaab3e0621a53935
+
+# BUILD stage
+FROM python:${PYTHON_VERSION}-slim@sha256:${SHA256} AS build
 
 WORKDIR /app
 
@@ -12,15 +15,29 @@ COPY requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
 
 
-# final stage
-FROM python:3.11.4-slim-buster
+# PROD stage
+FROM python:${PYTHON_VERSION}-slim-buster@sha256:${SHA256} AS prod
 
 WORKDIR /app
 COPY ./src/ /app
 
-COPY --from=builder /app/wheels /wheels
-COPY --from=builder /app/requirements.txt .
+COPY --from=build /app/wheels /wheels
+COPY --from=build /app/requirements.txt .
 
 RUN pip install --no-cache /wheels/*
 
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8006"]
+
+
+
+# DEV stage
+FROM python:${PYTHON_VERSION}-slim-buster@sha256:${SHA256} AS dev
+
+WORKDIR /app
+
+COPY --from=build /app/wheels /wheels
+COPY --from=build /app/requirements.txt .
+
+RUN pip install --no-cache /wheels/*
+ENV PORT = ${PORT}
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8006"]

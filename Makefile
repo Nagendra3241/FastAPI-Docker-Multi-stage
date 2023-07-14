@@ -5,18 +5,31 @@ local:
 	clear
 	uvicorn src.app:app --reload --host ${BACKEND_HOST} --port ${PORT}
 
-docker:
+prod:
 	clear
-	docker-compose -f docker-compose.yml up
+	docker-compose -f docker-compose.yml up api-prod
 
-docker-fresh:
+dev:
+	clear
+	docker-compose -f docker-compose.yml up api-dev
+
+docker-fresh-prod:
+	clear
+	$(info 🔰 Environment: PRODUCTION 🔰)
+	docker system prune -a -f
+	docker network prune -f
+	docker-compose -f docker-compose.yml stop
+	docker-compose -f docker-compose.yml down --remove-orphans
+	docker-compose -f docker-compose.yml up api-prod --build
+
+docker-fresh-dev:
 	clear
 	$(info 🔰 Environment: Development 🔰)
 	docker system prune -a -f
 	docker network prune -f
 	docker-compose -f docker-compose.yml stop
 	docker-compose -f docker-compose.yml down --remove-orphans
-	docker-compose -f docker-compose.yml up --build
+	docker-compose -f docker-compose.yml up api-dev --build
 
 deploy:
 	clear
@@ -35,4 +48,4 @@ migrate:
 
 clean: SHELL:=/bin/bash
 clean:
-	find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | xargs rm -rf	
+	find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | xargs rm -rf

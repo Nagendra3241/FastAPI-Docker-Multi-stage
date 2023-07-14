@@ -30,7 +30,7 @@ TORTOISE_ORM = {
 
 # Postgress
 async def Postgres_init():
-    await Tortoise.init(config=TORTOISE_ORM)
+    # await Tortoise.init(config=TORTOISE_ORM)
     # Generate the schema
     # await Tortoise.generate_schemas(safe=True)
     logger.debug("🔥 DataBase Connected !! 🔥")
