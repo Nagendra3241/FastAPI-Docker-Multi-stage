@@ -54,7 +54,7 @@ app.add_api_route("/", tags=["Greetings"], methods=["GET"], endpoint=docs)  # ty
 
 
 # Routers
-app.include_router(GOOGLE_OAUTH_ROUTER, prefix="/api/oauth")
+# app.include_router(GOOGLE_OAUTH_ROUTER, prefix="/api/oauth")
 app.include_router(USERS_ROUTER, prefix="/api/users")
 
 # Middleware

@@ -21,6 +21,7 @@ services:
 
   api-dev:
     container_name: api-dev
+    tty: true
     build:
       context: .
       target: dev
@@ -28,8 +29,8 @@ services:
     volumes:
       - ./src/:/app/
     ports:
-      - "${PORT}:${PORT}"
-      - "9229:9229"
+      - 8000:8000
+      - 9226:9226
     environment:
       BACKEND_HOST: ${BACKEND_HOST}
       PORT: ${PORT}

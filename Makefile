@@ -7,29 +7,33 @@ local:
 
 prod:
 	clear
-	docker-compose -f docker-compose.yml up api-prod
+	docker-compose stop
+	docker-compose down --remove-orphans
+	docker-compose up api-prod
 
 dev:
 	clear
-	docker-compose -f docker-compose.yml up api-dev
+	docker-compose stop
+	docker-compose down --remove-orphans
+	docker-compose up api-dev
 
 docker-fresh-prod:
 	clear
 	$(info 🔰 Environment: PRODUCTION 🔰)
 	docker system prune -a -f
 	docker network prune -f
-	docker-compose -f docker-compose.yml stop
-	docker-compose -f docker-compose.yml down --remove-orphans
-	docker-compose -f docker-compose.yml up api-prod --build
+	docker-compose stop
+	docker-compose down --remove-orphans
+	docker-compose up api-prod --build
 
 docker-fresh-dev:
 	clear
 	$(info 🔰 Environment: Development 🔰)
 	docker system prune -a -f
 	docker network prune -f
-	docker-compose -f docker-compose.yml stop
-	docker-compose -f docker-compose.yml down --remove-orphans
-	docker-compose -f docker-compose.yml up api-dev --build
+	docker-compose stop
+	docker-compose down --remove-orphans
+	docker-compose up api-dev --build
 
 deploy:
 	clear

@@ -1,4 +1,4 @@
-ARG PYTHON_VERSION=3.11.4
+ARG PYTHON_VERSION=3.10.4
 ARG SHA256=c46b0ae5728c2247b99903098ade3176a58e274d9c7d2efeaaab3e0621a53935
 
 # BUILD stage
@@ -39,5 +39,6 @@ COPY --from=build /app/wheels /wheels
 COPY --from=build /app/requirements.txt .
 
 RUN pip install --no-cache /wheels/*
-ENV PORT = ${PORT}
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8006"]
+RUN pip install debugpy
+
+CMD ["sh", "-c", "python -Xfrozen_modules=off -m debugpy --wait-for-client --listen 0.0.0.0:9226 -m uvicorn app:app --reload --host 0.0.0.0 --port 8000"]
