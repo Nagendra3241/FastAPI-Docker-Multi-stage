@@ -6,7 +6,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app_config.index_routes import docs
 from database.config import Postgres_init, Postgres_shutdown
-from features.oauth.google.google_oauth_routes import GOOGLE_OAUTH_ROUTER
 from features.users.users_routes import USERS_ROUTER
 
 from starlette.middleware.sessions import SessionMiddleware

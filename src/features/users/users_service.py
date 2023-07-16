@@ -1,5 +1,5 @@
 from typing import Any
-from .users_types import UserInDB, UserOutDB
+from features.users.users_types import UserInDB, UserOutDB
 from features.users.users_schema import User
 from app_config.logger import logger
 
@@ -10,7 +10,7 @@ async def create_user(user: UserInDB) -> User:
 
 async def update_user(user: UserInDB, user_in_db: User) -> User:
     await user_in_db.save()  # Triggers update_at TS field when on auto_now=True
-    return user_in_db.update_from_dict({**user.dict()})
+    return user_in_db.update_from_dict({**user.model_dump()})
 
 
 async def get_user(decoded_user: dict[str, Any]):  # USerInDB

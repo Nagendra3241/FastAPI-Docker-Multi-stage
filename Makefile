@@ -19,7 +19,7 @@ dev:
 
 docker-fresh-prod:
 	clear
-	$(info 🔰 Environment: PRODUCTION 🔰)
+	$(info 🔰 Environment: PRODUCTION )
 	docker system prune -a -f
 	docker network prune -f
 	docker-compose stop
