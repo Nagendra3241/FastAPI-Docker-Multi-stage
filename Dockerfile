@@ -8,6 +8,7 @@ WORKDIR /app
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV PYDEVD_DISABLE_FILE_VALIDATION 1
 
 COPY requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
@@ -39,4 +40,4 @@ COPY --from=build /app/requirements.txt .
 RUN pip install --no-cache /wheels/*
 RUN pip install debugpy
 
-CMD ["sh", "-c", "python -Xfrozen_modules=off -m debugpy --wait-for-client --listen 0.0.0.0:9226 -m uvicorn app:app --reload --host 0.0.0.0 --port 8000"]
+CMD python -Xfrozen_modules=off -m debugpy --wait-for-client --listen 0.0.0.0:9226 -m uvicorn app:app --reload --host ${BACKEND_HOST} --port ${PORT}
