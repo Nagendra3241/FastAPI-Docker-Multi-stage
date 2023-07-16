@@ -3,6 +3,7 @@ version: "3.7"
 services:
   api-prod:
     container_name: api-prod
+    tty: true
     build:
       context: .
       target: prod

@@ -1,6 +1,4 @@
 import os
-print("hellooo", os.getcwd())
-print(os.listdir())
 from typing import Any
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
