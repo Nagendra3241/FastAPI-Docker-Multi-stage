@@ -1,6 +1,6 @@
 #stage 1: Build dependencies
 
-FROM python:3.10-slim AS build
+FROM python:3.12-slim AS build
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --user -r requirements.txt
